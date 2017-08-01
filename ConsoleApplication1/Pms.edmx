@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjectManagementDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProjectMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="varchar" MaxLength="150" />
+          <Property Name="ProjectDescription" Type="text" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="ProjectType" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Client" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="IsBillable" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProjectTechnologyMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="TechnologyId" Type="int" />
+        </EntityType>
+        <EntityType Name="WorkingLogMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="TaskDescription" Type="text" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="AssignTaskId" Type="int" />
+        </EntityType>
+        <Association Name="FK_ProjectMaster_ProjectMaster">
+          <End Role="ProjectMaster" Type="Self.ProjectMaster" Multiplicity="1" />
+          <End Role="ProjectMaster1" Type="Self.ProjectMaster" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectMaster1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTechnologyMaster_ProjectMaster">
+          <End Role="ProjectMaster" Type="Self.ProjectMaster" Multiplicity="0..1" />
+          <End Role="ProjectTechnologyMaster" Type="Self.ProjectTechnologyMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTechnologyMaster">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectManagementDatabaseModelStoreContainer">
+          <EntitySet Name="ProjectMaster" EntityType="Self.ProjectMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectTechnologyMaster" EntityType="Self.ProjectTechnologyMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkingLogMaster" EntityType="Self.WorkingLogMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProjectMaster_ProjectMaster" Association="Self.FK_ProjectMaster_ProjectMaster">
+            <End Role="ProjectMaster" EntitySet="ProjectMaster" />
+            <End Role="ProjectMaster1" EntitySet="ProjectMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTechnologyMaster_ProjectMaster" Association="Self.FK_ProjectTechnologyMaster_ProjectMaster">
+            <End Role="ProjectMaster" EntitySet="ProjectMaster" />
+            <End Role="ProjectTechnologyMaster" EntitySet="ProjectTechnologyMaster" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectManagementDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ProjectManagementDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProjectMaster" EntityType="ProjectManagementDatabaseModel.ProjectMaster" />
+          <EntitySet Name="ProjectTechnologyMaster" EntityType="ProjectManagementDatabaseModel.ProjectTechnologyMaster" />
+          <EntitySet Name="WorkingLogMaster" EntityType="ProjectManagementDatabaseModel.WorkingLogMaster" />
+          <AssociationSet Name="FK_ProjectMaster_ProjectMaster" Association="ProjectManagementDatabaseModel.FK_ProjectMaster_ProjectMaster">
+            <End Role="ProjectMaster" EntitySet="ProjectMaster" />
+            <End Role="ProjectMaster1" EntitySet="ProjectMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTechnologyMaster_ProjectMaster" Association="ProjectManagementDatabaseModel.FK_ProjectTechnologyMaster_ProjectMaster">
+            <End Role="ProjectMaster" EntitySet="ProjectMaster" />
+            <End Role="ProjectTechnologyMaster" EntitySet="ProjectTechnologyMaster" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ProjectMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="ProjectType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Client" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="IsBillable" Type="Boolean" />
+          <NavigationProperty Name="ProjectMaster1" Relationship="ProjectManagementDatabaseModel.FK_ProjectMaster_ProjectMaster" FromRole="ProjectMaster" ToRole="ProjectMaster1" />
+          <NavigationProperty Name="ProjectMaster2" Relationship="ProjectManagementDatabaseModel.FK_ProjectMaster_ProjectMaster" FromRole="ProjectMaster1" ToRole="ProjectMaster" />
+          <NavigationProperty Name="ProjectTechnologyMaster" Relationship="ProjectManagementDatabaseModel.FK_ProjectTechnologyMaster_ProjectMaster" FromRole="ProjectMaster" ToRole="ProjectTechnologyMaster" />
+        </EntityType>
+        <EntityType Name="ProjectTechnologyMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="TechnologyId" Type="Int32" />
+          <NavigationProperty Name="ProjectMaster" Relationship="ProjectManagementDatabaseModel.FK_ProjectTechnologyMaster_ProjectMaster" FromRole="ProjectTechnologyMaster" ToRole="ProjectMaster" />
+        </EntityType>
+        <EntityType Name="WorkingLogMaster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="TaskDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="AssignTaskId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_ProjectMaster_ProjectMaster">
+          <End Type="ProjectManagementDatabaseModel.ProjectMaster" Role="ProjectMaster" Multiplicity="1" />
+          <End Type="ProjectManagementDatabaseModel.ProjectMaster" Role="ProjectMaster1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectMaster1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTechnologyMaster_ProjectMaster">
+          <End Type="ProjectManagementDatabaseModel.ProjectMaster" Role="ProjectMaster" Multiplicity="0..1" />
+          <End Type="ProjectManagementDatabaseModel.ProjectTechnologyMaster" Role="ProjectTechnologyMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTechnologyMaster">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectManagementDatabaseModelStoreContainer" CdmEntityContainer="ProjectManagementDatabaseEntities">
+          <EntitySetMapping Name="ProjectMaster">
+            <EntityTypeMapping TypeName="ProjectManagementDatabaseModel.ProjectMaster">
+              <MappingFragment StoreEntitySet="ProjectMaster">
+                <ScalarProperty Name="IsBillable" ColumnName="IsBillable" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTechnologyMaster">
+            <EntityTypeMapping TypeName="ProjectManagementDatabaseModel.ProjectTechnologyMaster">
+              <MappingFragment StoreEntitySet="ProjectTechnologyMaster">
+                <ScalarProperty Name="TechnologyId" ColumnName="TechnologyId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkingLogMaster">
+            <EntityTypeMapping TypeName="ProjectManagementDatabaseModel.WorkingLogMaster">
+              <MappingFragment StoreEntitySet="WorkingLogMaster">
+                <ScalarProperty Name="AssignTaskId" ColumnName="AssignTaskId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
